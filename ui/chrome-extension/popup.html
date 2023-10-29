@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Optimization PoC</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/@material/button@12.0.0/dist/mdc.button.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@material/textfield@12.0.0/dist/mdc.textfield.min.css">
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div id="custom-spinner-container" class="hide">
+        <div id="custom-spinner"></div>
+    </div>
+    <div id="questions-container"></div>
+    <div id="results-container"></div>
+
+    <div id="button-container">
+        <div>
+            <button class="mdc-button mdc-button--raised" id="add-question-button">
+                Add question
+            </button>
+            <button class="mdc-button mdc-button--raised" id="clear-results-button" disabled>
+                Clear results
+            </button>
+        </div>
+        <button class="mdc-button mdc-button--raised" id="get-results-button" disabled>
+            Send
+        </button>
+    </div>
+
+    <!--<script src="https://unpkg.com/@material/button@12.0.0/dist/mdc.button.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>-->
+    <script src="popup.js"></script>
+</body>
+</html>
