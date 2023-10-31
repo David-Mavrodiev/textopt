@@ -3,7 +3,7 @@ from nltk.corpus import stopwords, wordnet
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.stem import WordNetLemmatizer
 
-class SynonymWordCounterAnswerChecker:
+class SynonymWordCounterAnswerabilityChecker:
     def __init__(self):
         nltk.download('punkt')
         nltk.download('stopwords')
@@ -56,6 +56,6 @@ class SynonymWordCounterAnswerChecker:
         for question in questions:
             results.append({
                 "question": question,
-                "answer": self.count_matches(text_words, question) > 0.5
+                "answer": self.count_matches(text_words, question) > 0.51
             })
         return results

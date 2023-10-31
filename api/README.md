@@ -8,3 +8,4 @@ source "$HOME/.cargo/env"
 
 Install the needed dependencies
 pip install flask transformers torch nltk
+pip install flask transformers torch nltk scikit-learn sentence_transformers

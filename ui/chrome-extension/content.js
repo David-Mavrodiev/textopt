@@ -18,6 +18,17 @@ function extractVisibleText(node) {
   return text;
 }
 
+function sanitizeForJSON(text) {
+    return text
+        .replace(/\\/g, ' ')   // Escape backslashes first
+        .replace(/\"/g, ' ')   // Escape double quotes
+        .replace(/\n/g, ' ')   // Escape newlines
+        .replace(/\r/g, ' ')   // Escape carriage returns
+        .replace(/\t/g, ' ')   // Escape tabs
+        .replace(/\b/g, '')   // Escape backspaces
+        .replace(/\f/g, '');  // Escape form feeds
+}
+
 function splitText(text) {
     return text.split(/(?<=[.!?])\s+/);
 }
@@ -25,6 +36,10 @@ function splitText(text) {
 function chunkText(text, chunkSize) {
     let chunk = [], chunks = [], currentLength = 0;
     for (let sentence of splitText(text)) {
+        if (sentence.length < 10) {
+            continue;
+        }
+
         if (currentLength + sentence.length > chunkSize && currentLength > 0) {
             chunks.push(chunk);
             chunk = [];
@@ -42,7 +57,7 @@ function chunkText(text, chunkSize) {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === 'analyze') {
-    let chunks = chunkText(extractVisibleText(document.body), 512);
+    let chunks = chunkText(sanitizeForJSON(extractVisibleText(document.body)), 512);
     chrome.runtime.sendMessage({action: 'expectedResults', chunksCount: chunks.length});
     chunks.forEach(sentences => {
         chrome.runtime.sendMessage(
@@ -56,7 +71,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
               console.error(response.error);
             }
 
-            const text = response.data.length > 0 ? response.data.join("") : '';
+            const text = response && response.data && response.data.length > 0
+                ? response.data.join("") : '';
             chrome.runtime.sendMessage({action: 'results', text: text});
           }
         );
